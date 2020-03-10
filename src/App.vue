@@ -1,32 +1,45 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
+    <app-nav-burger />
+    <transition name="slide-right" mode="out-in">
+      <router-view />
+    </transition>
   </div>
 </template>
 
+<script>
+import AppNavBurger from "./components/AppNavBurger.vue";
+export default {
+  components: {
+    appNavBurger: AppNavBurger
+  }
+};
+</script>
 <style lang="scss">
+body,
+html,
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+  // height: 100%;
+  margin: 0;
+}
+.slide-left-leave-active,
+.slide-right-enter-active,
+.slide-right-leave-active {
+  transition-duration: 0.3s;
+  transition-property: height, opacity, transform;
+  transition-timing-function: cubic-bezier(0.55, 0, 0.1, 1);
+  overflow: hidden;
 }
 
-#nav {
-  padding: 30px;
+.slide-left-enter,
+.slide-right-leave-active {
+  opacity: 0;
+  transform: translate(2em, 0);
+}
 
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
+.slide-left-leave-active,
+.slide-right-enter {
+  opacity: 0;
+  transform: translate(-2em, 0);
 }
 </style>
